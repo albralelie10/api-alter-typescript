@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node index.ts",
-    "dev": "nodemon index.ts",
+    "start": "ts-node scrip.ts",
+    "dev": "nodemon scrip.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "vercel-build":"echo hello"
