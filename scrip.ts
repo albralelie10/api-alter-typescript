@@ -1,7 +1,6 @@
 import express,{Request,Response} from "express"
-
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import { sql } from '@vercel/postgres';
 
 const port = process.env.PORT || 3000;
 
@@ -11,17 +10,18 @@ const app=express()
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
-
-
-app.get("/users",async(req:Request,res:Response)=>{
-  try{
-    const users=await prisma.sample.findMany();
-    return res.json(users)
-  }catch(err){
-    return res.status(500).json({msg:"Server Error",err})
+export async function handler(
+  request: VercelRequest,
+  response: VercelResponse,
+) {
+  try {
+    const result =
+      await sql`CREATE TABLE Pets ( Name varchar(255), Owner varchar(255) );`;
+    return response.status(200).json({ result });
+  } catch (error) {
+    return response.status(500).json({ error });
   }
-})
-
+}
 
 app.get("/",(req:Request,res:Response)=>{
     return res.send("Hello Worl")
